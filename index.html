@@ -1,1 +1,260 @@
-Test
+<html>
+<head>
+<style type="text/css">
+html,table { font-family: 'Source Code Pro', monospace; font-size:14px; }
+table { width:100% }
+table tr td,table tr th { vertical-align:top; text-align:left;  }
+
+table tr th { cursor:pointer }
+.p {     background-color: black;
+    color: white; display:inline; }
+    
+.p .t { padding-right:2px; padding-left:2px; }
+
+hr{ 
+  border: 0; 
+  height: 1px; 
+  background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+  background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+  background-image: -ms-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+  background-image: -o-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0); 
+}
+
+
+sup { curosr:pointer }
+
+tr.spec td { padding-top:20px; }
+
+.sm { font-size:10px; }
+
+.tr { text-align:right }
+
+tr:nth-child(even){background-color: #f2f2f2}
+.sk-cube-grid {
+  width: 40px;
+  height: 40px;
+  margin: 100px auto;
+}
+
+.sk-cube-grid .sk-cube {
+  width: 33%;
+  height: 33%;
+  background-color: #333;
+  float: left;
+  -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+          animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; 
+}
+.sk-cube-grid .sk-cube1 {
+  -webkit-animation-delay: 0.2s;
+          animation-delay: 0.2s; }
+.sk-cube-grid .sk-cube2 {
+  -webkit-animation-delay: 0.3s;
+          animation-delay: 0.3s; }
+.sk-cube-grid .sk-cube3 {
+  -webkit-animation-delay: 0.4s;
+          animation-delay: 0.4s; }
+.sk-cube-grid .sk-cube4 {
+  -webkit-animation-delay: 0.1s;
+          animation-delay: 0.1s; }
+.sk-cube-grid .sk-cube5 {
+  -webkit-animation-delay: 0.2s;
+          animation-delay: 0.2s; }
+.sk-cube-grid .sk-cube6 {
+  -webkit-animation-delay: 0.3s;
+          animation-delay: 0.3s; }
+.sk-cube-grid .sk-cube7 {
+  -webkit-animation-delay: 0s;
+          animation-delay: 0s; }
+.sk-cube-grid .sk-cube8 {
+  -webkit-animation-delay: 0.1s;
+          animation-delay: 0.1s; }
+.sk-cube-grid .sk-cube9 {
+  -webkit-animation-delay: 0.2s;
+          animation-delay: 0.2s; }
+
+@-webkit-keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+            transform: scale3D(1, 1, 1);
+  } 35% {
+    -webkit-transform: scale3D(0, 0, 1);
+            transform: scale3D(0, 0, 1); 
+  }
+}
+
+@keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+            transform: scale3D(1, 1, 1);
+  } 35% {
+    -webkit-transform: scale3D(0, 0, 1);
+            transform: scale3D(0, 0, 1);
+  } 
+}
+</style>
+<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+<link href="https://unpkg.com/tippy.js@1.3.0/dist/tippy.css" rel="stylesheet">
+<link href="table.css" rel="stylesheet">
+<script src="https://unpkg.com/tippy.js@1.3.0/dist/tippy.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.14/js/jquery.tablesorter.min.js"></script>
+<script src="jquery.sticktableheaders.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+<script type='text/javascript'>    
+var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1k1V6WOH7wy6fR-Jh75qkYRBKULxWM-3Vym4gS0DgIwY/pubhtml';
+
+function init() {
+	Tabletop.init( { key: publicSpreadsheetUrl,
+	callback: showInfo,
+	simpleSheet: false } )
+}
+
+var d;
+
+var special=['1','10','100'];
+
+function showInfo(data, tabletop) {
+	d=data;
+	var entry = Handlebars.compile($('#entry-template').html());
+	for ( x = 0; x < d.Spots.elements.length; x++ )
+	{
+		var plate=x+1;
+		$('#table').append(entry({
+		SP:$.inArray(d.Spots.elements[x].Plate,special)>=0?'spec':'',
+		Plate:d.Spots.elements[x].Plate,
+		URL1:d.Spots.elements[x].URL1,URL1A:providerAlt(d.Spots.elements[x].URL1),
+		URL2:d.Spots.elements[x].URL2,URL2A:providerAlt(d.Spots.elements[x].URL2),
+		URL3:d.Spots.elements[x].URL3,URL3A:providerAlt(d.Spots.elements[x].URL3),
+		URL4:d.Spots.elements[x].URL4,URL4A:providerAlt(d.Spots.elements[x].URL4),
+		URL5:d.Spots.elements[x].URL5,URL5A:providerAlt(d.Spots.elements[x].URL5),
+		URL6:d.Spots.elements[x].URL6,URL6A:providerAlt(d.Spots.elements[x].URL6),
+		
+		HasSpot:rego(d.Registrations.elements[x].HasSpot,d.Registrations.elements[x].Rego20171015,d.Registrations.elements[x].Car),
+		CAR:d.Registrations.elements[x].Car,
+		
+		AUCTION1:d.Auctions.elements[x].Date1,
+		AUCTION1PRICE:d.Auctions.elements[x].Price1,
+		AUCTION2:d.Auctions.elements[x].Date2,
+		AUCTION2PRICE:d.Auctions.elements[x].Price2,
+		AUCTION3:d.Auctions.elements[x].Date3,
+		AUCTION3PRICE:d.Auctions.elements[x].Price3,
+		FAKE1:d.Fakes.elements[x].URL1,
+		HIST1:d.Historical.elements[x].URL1,HIST1A:providerAlt(d.Historical.elements[x].URL1),
+		HIST2:d.Historical.elements[x].URL2,HIST2A:providerAlt(d.Historical.elements[x].URL2),
+		HIST3:d.Historical.elements[x].URL3,HIST3A:providerAlt(d.Historical.elements[x].URL3),
+		MORE1:d.Info.elements[x].URL1
+		
+		
+		}));
+	}
+	$('table').tablesorter();
+	//$('table').stickyTableHeaders();
+	tippy('sup'); tippy('.ti',{duration:100});
+	$('.sk-cube-grid').remove();
+}
+
+function rego ( hasSpot, lookup, car )
+{
+	if ( lookup!='' )
+	{
+		if ( lookup =='NO') return 'No';
+		if ( lookup == 'REG' ) return 'Yes';
+	} else {
+		if ( hasSpot=='Yes') return '';
+		if ( hasSpot =='No') return '';
+	}
+}
+
+
+function providerAlt ( url )
+{
+	if ( url.indexOf('facebook.com/heritage')!=-1 ) return 'Heritage Number Plate Spottings / numberplates.com.au';
+	if ( url.indexOf('=heritageplateofnsw')!=-1 ) return 'Heritage Plates of NSW (Instagram)';
+	if ( url.indexOf('=heritageplates')!=-1 ) return 'Heritage Plates (Instagram)';
+	
+}
+
+window.addEventListener('DOMContentLoaded', init)
+</script>
+
+
+<script id="entry-template" type="text/x-handlebars-template">
+	<tr class="{{SP}}">
+		<td><div class="p"><span class="t">{{Plate}}</span></p></td>
+<td>
+{{#if URL1}}<a href="{{URL1}}" class="ti" target="_spots" title="{{URL1A}}">1</a>{{/if}}
+{{#if URL2}}<a href="{{URL2}}" class="ti" target="_spots" title="{{URL2A}}">2</a>{{/if}}
+{{#if URL3}}<a href="{{URL3}}" class="ti" target="_spots" title="{{URL3A}}">3</a>{{/if}}
+{{#if URL4}}<a href="{{URL4}}" class="ti" target="_spots" title="{{URL4A}}">4</a>{{/if}}
+{{#if URL5}}<a href="{{URL5}}" class="ti" target="_spots" title="{{URL5A}}">5</a>{{/if}}
+{{#if URL6}}<a href="{{URL6}}" class="ti" target="_spots" title="{{URL6A}}">6</a>{{/if}}
+</td>
+<td class="ti" title="{{CAR}}">{{HasSpot}}</td>
+<td>{{#if AUCTION1}}{{AUCTION1}}{{/if}}
+</td><td class="tr">{{#if AUCTION1}}{{AUCTION1PRICE}}{{/if}}</td>
+
+</td>
+<td>{{#if FAKE1}}<a href="{{FAKE1}}" target="_spots">1</a>{{/if}}</td>
+<!--<td>{{#if AUCTION3}}{{AUCTION3}}{{/if}}</td><td>{{#if AUCTION3}} {{AUCTION3PRICE}}{{/if}}</td>-->
+<td>
+{{#if HIST1}}<a href="{{HIST1}}" class="ti" title="{{HIST1A}}" target="_spots">1</a>{{/if}}
+{{#if HIST2}}<a href="{{HIST2}}" class="ti" title="{{HIST2A}}" target="_spots">2</a>{{/if}}
+{{#if HIST3}}<a href="{{HIST3}}" class="ti" title="{{HIST3A}}" target="_spots">3</a>{{/if}}
+</td>
+<td class="sm">
+{{#if MORE1}}<a href="{{MORE1}}" title="{{MORE1}}" class="ti" target="_spots">Info</a>{{/if}}
+{{#if AUCTION2}}<span class="ti" title="Previous Auction: {{AUCTION2}} - {{AUCTION2PRICE}}">{{AUCTION2PRICE}}</span>{{/if}}
+</td>
+	</tr>
+  </div>
+</script>
+
+</head>
+<body>
+<h1>NSW Heritage Plates 1 to 999</h1>
+<p>1, 2 and 3 digit NSW Heritage Car Plate spots, auctions, history and more.</p><hr/>
+<table class="header-fixed">
+<thead>
+<tr>
+<th class="ti" title="NSW Heritage Plate Number">NSW</th>
+<th class="ti" title="Images of Cars with the Plate">Spots</th>
+<th class="ti" title="Is the plate currently on a car? (As of October 2017)">Rego</th>
+<th class="ti" title="Last Known Auction/Sale - if 01-01 exact date unknown">Auction Date</th>
+<th class="ti tr" title="Price Paid at Auction">Price</th>
+<th class="ti" title="Plates that look similar but use the letter O rather than 0 etc..">Fakes</th>
+<th class="ti" title="Spots on cars where it's confirmed they are no longer current">Historical Spots</th>
+<th class="ti">Other</th>
+</thead>
+<tbody id="table"></tbody>
+</table>
+<div class="sk-cube-grid">
+  <div class="sk-cube sk-cube1"></div>
+  <div class="sk-cube sk-cube2"></div>
+  <div class="sk-cube sk-cube3"></div>
+  <div class="sk-cube sk-cube4"></div>
+  <div class="sk-cube sk-cube5"></div>
+  <div class="sk-cube sk-cube6"></div>
+  <div class="sk-cube sk-cube7"></div>
+  <div class="sk-cube sk-cube8"></div>
+  <div class="sk-cube sk-cube9"></div>
+</div>
+<hr/>
+<h2>Contributions</h2>
+<p>Share your spots with - </p>
+<ul><li><a href="https://www.facebook.com/heritageplates/">Heritage Number Plate Spotting</a> on Facebook</li>
+<li><a href="https://www.instagram.com/heritageplates/?hl=en">Heritage Number Plates</a> on Instagram</li>
+<li><a href="https://www.instagram.com/heritageplatesofnsw/?hl=en">Heritage Number Plates of NSW</a> on Instagram</li>
+</ul>
+
+<p>Or upload to Instagram with #nswheritageplates.</p>
+<h2>FAQ</h2>
+<p>This resource attempts to track and cover all NSW Heritages Plates 1 to 999 (1, 2 and 3 digit NSW Heritage plates). 
+It does not attempt to replace the existing Heritage spotting websites but instead bring all of the spots and information together into a single resource.
+<hr/>
+<h2>Data</h2>
+<a href="https://docs.google.com/spreadsheets/d/1k1V6WOH7wy6fR-Jh75qkYRBKULxWM-3Vym4gS0DgIwY/edit?usp=sharing">View and Download the Spreadsheet</a> that powers this website.
+</body>
+</html>
